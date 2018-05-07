@@ -143,7 +143,7 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 		p.setAttribute('id','no-results');
 		const parent = ul.parentNode;
 
-		p.innerHTML = "There are no results for that filter";
+		p.innerHTML = "Sorry! There are no results for that combination.";
 		parent.insertBefore(p, ul);
 	}
 

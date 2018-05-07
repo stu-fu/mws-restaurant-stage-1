@@ -69,7 +69,99 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 	}
 	// fill reviews
 	fillReviewsHTML();
+	fillRestaurantSchema();
 }
+
+
+/**
+ * Get review averages for Schema
+ */
+createReviewSchemaAverage = (review, reviewCount) => {
+	let reviewsAverage = 0;
+
+	review.forEach((review, index) => {
+		reviewsAverage += review.rating;
+	});
+
+	const avg = reviewsAverage / reviewCount;
+
+	return Math.round( avg * 10 ) / 10;;
+}
+
+
+
+/**
+ * Create JSON-LD text for each review
+ */
+createReviewSchema = (review, reviewCount) => {
+	const ul = document.getElementById('reviews-list');
+	let reviewsItems = ``;
+
+	review.forEach((review, index) => {
+		let hasComma = ',';
+
+		if(index == reviewCount - 1) {
+			hasComma = '';
+		}
+
+		reviewsItems += `
+			{
+				"@type": "Review",
+				"author": "${review.name}",
+				"datePublished": "${review.date}",
+				"reviewBody": "${review.comments}",
+				"name": "${review.name}: ${review.rating} out of 5",
+				"reviewRating": {
+					"@type": "Rating",
+					"bestRating": "5",
+					"ratingValue": "${review.rating}",
+					"worstRating": "1"
+				}
+			}${hasComma}
+			`
+	});
+
+	return reviewsItems;
+}
+
+
+/**
+ * Create JSON-ld for entire restaurant
+ */
+fillRestaurantSchema = (restaurant = self.restaurant) => {
+	const container = document.getElementById('restaurant-container');
+	const schemaScript = document.createElement('script');
+	schemaScript.setAttribute('type','application/ld+json');
+
+	const reviews = restaurant.reviews;
+	const reviewCount = reviews.length;
+
+	let reviewText = ``;
+	let reviewSchemaItem = ``;
+
+	if(reviews) {
+		reviewText = `,
+		"review": [
+			${createReviewSchema(restaurant.reviews, reviewCount)}
+		]
+		`;
+	}
+
+	schemaScript.innerHTML = `{
+		"@context": "http://schema.org",
+		"@type": "Service",
+		"aggregateRating": {
+			"@type": "AggregateRating",
+			"ratingValue": "${createReviewSchemaAverage(restaurant.reviews, reviewCount)}",
+			"reviewCount": "${reviewCount}"
+		},
+		"description": "${restaurant.cuisine_type} in ${restaurant.neighborhood}",
+		"name": "${restaurant.name}",
+		"image": "${DBHelper.imageUrlForRestaurant(restaurant)}"${reviewText}
+	}`;
+	container.appendChild(schemaScript);
+}
+
 
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
@@ -77,8 +169,10 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => {
 	const hours = document.getElementById('restaurant-hours');
 	const hoursTitle = document.createElement('h2');
+
 	hoursTitle.innerHTML = 'Hours';
 	hours.appendChild(hoursTitle);
+
 	for (let key in operatingHours) {
 		const row = document.createElement('tr');
 
@@ -106,12 +200,15 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
 		container.appendChild(noReviews);
 		return;
 	}
+
 	const ul = document.getElementById('reviews-list');
 	reviews.forEach(review => {
 		ul.appendChild(createReviewHTML(review));
 	});
+
 	container.appendChild(ul);
 }
+
 
 /**
  * Create review HTML and add it to the webpage.
