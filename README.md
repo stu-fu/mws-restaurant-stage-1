@@ -3,8 +3,12 @@
 
 ## Quicklinks
 
-- [Notes specific to this fork](#original)
-- [Original Project instructions](https://www.python.org/)
+- [Notes specific to this fork](#stufu)
+- [Original Project instructions](#original)
+
+# <a name="stufu"></a> About this fork
+---
+
 
 # <a name="original"></a> Mobile Web Specialist Certification Course
 ---
