@@ -3,10 +3,10 @@
 
 ## Quicklinks
 
-- [Notes specific to this fork](https://www.python.org/)
+- [Notes specific to this fork](#original)
 - [Original Project instructions](https://www.python.org/)
 
-# Mobile Web Specialist Certification Course
+# <a name="original"></a> Mobile Web Specialist Certification Course
 ---
 #### _Three Stage Course Material Project - Restaurant Reviews_
 
