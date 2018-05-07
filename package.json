@@ -1,0 +1,26 @@
+{
+  "name": "--save",
+  "version": "1.0.0",
+  "description": "A package by stu-fu for the Udacity MWS course",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stu-fu/mws-restaurant-stage-1.git"
+  },
+  "author": "Stu Furlong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stu-fu/mws-restaurant-stage-1/issues"
+  },
+  "homepage": "https://github.com/stu-fu/mws-restaurant-stage-1#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.6.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-cssmin": "^0.2.0"
+  }
+}

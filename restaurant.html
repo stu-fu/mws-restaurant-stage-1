@@ -2,12 +2,12 @@
 
 <html lang="en-US">
 	<head>
-		<link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
-		<link rel="stylesheet" href="css/styles.css">
-
 		<title>Restaurant Info</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+		<link rel="stylesheet" href="css/min/styles.min.css" />
 	</head>
 
 	<body class="inside">
@@ -33,27 +33,23 @@
 					</a>
 				</h1>
 			</nav>
-			<ul id="breadcrumb" >
+
+			<ul class="breadcrumbs" id="breadcrumb" >
 				<li><a href="/">Home</a></li>
 			</ul>
 		</header>
 
 		<main role="main" id="maincontent">
-			<section id="restaurant-container" aria-labelledby="restaurant-name">
-				<h1 id="restaurant-name"></h1>
-				<img id="restaurant-img">
-				<p id="restaurant-cuisine"></p>
-				<p id="restaurant-address"></p>
-				<table id="restaurant-hours"></table>
+			<section class="restaurant-container" id="restaurant-container" aria-labelledby="restaurant-name">
 			</section>
 
 			<section id="map-container" aria-hidden="true" aria-label="Map of Restaurant">
 				<div id="map"></div>
 			</section>
 
-			<section id="reviews-container" aria-labelledby="reviews-title">
+			<section class="reviews-container" id="reviews-container" aria-labelledby="reviews-title">
 				<h2 id="reviews-title">Reviews</h2>
-				<ul id="reviews-list"></ul>
+				<ul class="reviews-list" id="reviews-list"></ul>
 			</section>
 		</main>
 
@@ -61,8 +57,8 @@
 		Copyright &copy; 2018 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
 		</footer>
 
-		<script src="js/dbhelper.js"></script>
-		<script src="js/restaurant_info.js"></script>
+		<script src="js/min/dbhelper.min.js"></script>
+		<script src="js/min/restaurant_info.min.js"></script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkPiIfhu2TpdEMAygBHuZFJ9bD_58GUmY&libraries=places&callback=initMap"></script>
 	</body>
 </html>
