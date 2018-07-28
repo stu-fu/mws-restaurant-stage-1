@@ -51,6 +51,12 @@ fetchRestaurantFromURL = (callback) => {
 fillRestaurantHTML = (restaurant = self.restaurant) => {
 	const restaurantContainer = document.getElementById('restaurant-container');
 
+	const restaurantContainerContent = document.createElement('div');
+	restaurantContainerContent.setAttribute('class', 'restaurant-content');
+
+	const restaurantContainerInfo = document.createElement('div');
+	restaurantContainerInfo.setAttribute('id', 'restaurant-info');
+
 	const restaurantHeading = document.createElement('h1');
 	restaurantHeading.setAttribute('id','restaurant-name');
 	restaurantHeading.className = 'restaurant-name';
@@ -61,21 +67,33 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 	restaurantAddress.className = 'restaurant-address';
 	restaurantAddress.innerHTML = restaurant.address;
 
+	const restaurantImageContainer = document.createElement('div');
+	restaurantImageContainer.setAttribute('class', 'restaurant-image-container');
 	const restaurantImage = document.createElement('img');
 	restaurantImage.setAttribute('id','restaurant-img');
 	restaurantImage.className = 'restaurant-img';
 	restaurantImage.setAttribute('alt','Picture of ' + restaurant.name);
-	restaurantImage.src = DBHelper.imageUrlForRestaurant(restaurant);
+
+	const imgPath = DBHelper.imageUrlForRestaurant(restaurant);
+	const minImg = imgPath.replace('img/', 'img/min/');
+	restaurantImage.setAttribute('srcset', minImg + ' 300w,' + imgPath +  ' 600w');
+	restaurantImage.setAttribute('sizes', '(max-width: 850px) 300px');
+	restaurantImage.src = imgPath;
 
 	const restaurantCuisine = document.createElement('p');
 	restaurantCuisine.setAttribute('id','restaurant-cuisine');
 	restaurantCuisine.className = 'restaurant-cuisine';
 	restaurantCuisine.innerHTML = restaurant.cuisine_type;
 
+	restaurantImageContainer.append(restaurantImage);
+	restaurantImageContainer.append(restaurantCuisine);
+	restaurantImageContainer.append(restaurantAddress);
+
+	restaurantContainerContent.append(restaurantImageContainer);
+	restaurantContainerContent.append(restaurantContainerInfo);
+
 	restaurantContainer.append(restaurantHeading);
-	restaurantContainer.append(restaurantImage);
-	restaurantContainer.append(restaurantCuisine);
-	restaurantContainer.append(restaurantAddress);
+	restaurantContainer.append(restaurantContainerContent);
 
 	// fill operating hours
 	if (restaurant.operating_hours) {
@@ -182,7 +200,7 @@ fillRestaurantSchema = (restaurant = self.restaurant) => {
  * Create restaurant operating hours HTML table and add it to the webpage.
  */
 fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => {
-	const restaurantContainer = document.getElementById('restaurant-container');
+	const restaurantContainer = document.getElementById('restaurant-info');
 	const hoursTitle = document.createElement('h2');
 
 	const restaurantHoursTable = document.createElement('table');

@@ -67,6 +67,8 @@ section {
 	display: block;
 }
 
+figure { margin:0; }
+
 .visually-hidden {
 	position:absolute;
 	left:-9999em;
@@ -453,6 +455,18 @@ nav h1 a:focus .icon-gavel {
 	border-top: 1px solid #fff;
 	padding: 30px 40px;
 }
+
+
+@media(min-width:630px) and (max-width:950px) {
+	.restaurant-content {
+		display:flex;
+	}
+
+	.restaurant-image-container {
+		width:65%;
+	}
+}
+
 
 @media(min-width:950px) {
 	.restaurant-container,

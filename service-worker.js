@@ -13,7 +13,7 @@
 
 //importScripts('../serviceworker-cache-polyfill.js');
 
-var CACHE_VERSION = 1;
+var CACHE_VERSION = 40;
 var CURRENT_CACHES = {
   prefetch: 'prefetch-cache-v' + CACHE_VERSION
 };
@@ -22,9 +22,7 @@ self.addEventListener('install', function(event) {
   var now = Date.now();
 
   var urlsToPrefetch = [
-    '/',
-    '/js/min/main.min.js',
-    '/css/min/styles.min.css',
+    '/'
   ];
 
   // All of these logging statements should be visible via the "Inspect" interface

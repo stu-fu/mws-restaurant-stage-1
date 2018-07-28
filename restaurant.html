@@ -64,7 +64,20 @@
 		<footer role="contentinfo" id="footer">
 		Copyright &copy; 2018 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
 		</footer>
-
+		<script>
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', function() {
+					navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+						// Registration was successful
+						console.log('ServiceWorker registration successful with scope: ', registration.scope);
+					}, function(err) {
+						// registration failed :(
+						console.log('ServiceWorker registration failed: ', err);
+					});
+				});
+			}
+			console.log('something!');
+			</script>
 		<script src="js/min/dbhelper.min.js"></script>
 		<script src="js/min/restaurant_info.min.js"></script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkPiIfhu2TpdEMAygBHuZFJ9bD_58GUmY&libraries=places&callback=initMap"></script>
