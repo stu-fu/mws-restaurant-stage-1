@@ -13,7 +13,7 @@
 
 //importScripts('../serviceworker-cache-polyfill.js');
 
-var CACHE_VERSION = 55;
+var CACHE_VERSION = 56;
 var CURRENT_CACHES = {
   prefetch: 'prefetch-cache-v' + CACHE_VERSION
 };
@@ -23,30 +23,30 @@ self.addEventListener('install', function(event) {
 
   var urlsToPrefetch = [
     '/',
-    'css/min/styles.min.css',
-    'img/1.jpg',
-    'img/2.jpg',
-    'img/3.jpg',
-    'img/4.jpg',
-    'img/5.jpg',
-    'img/6.jpg',
-    'img/7.jpg',
-    'img/8.jpg',
-    'img/9.jpg',
-    'img/10.jpg',
-    'img/min/1.jpg',
-    'img/min/2.jpg',
-    'img/min/3.jpg',
-    'img/min/4.jpg',
-    'img/min/5.jpg',
-    'img/min/6.jpg',
-    'img/min/7.jpg',
-    'img/min/8.jpg',
-    'img/min/9.jpg',
-    'img/min/10.jpg',
-    'js/min/dbhelper.min.js',
-    'js/min/main.min.js',
-    'js/min/restaurant_info.min.js',
+    //'css/min/styles.min.css',
+   //'img/1.jpg',
+   //'img/2.jpg',
+   //'img/3.jpg',
+   //'img/4.jpg',
+   //'img/5.jpg',
+   //'img/6.jpg',
+   //'img/7.jpg',
+   //'img/8.jpg',
+   //'img/9.jpg',
+   //'img/10.jpg',
+   //'img/min/1.jpg',
+   //'img/min/2.jpg',
+   //'img/min/3.jpg',
+   //'img/min/4.jpg',
+   //'img/min/5.jpg',
+   //'img/min/6.jpg',
+   //'img/min/7.jpg',
+   //'img/min/8.jpg',
+   //'img/min/9.jpg',
+   //'img/min/10.jpg',
+   //'js/min/dbhelper.min.js',
+   //'js/min/main.min.js',
+   //'js/min/restaurant_info.min.js',
   ];
 
   // All of these logging statements should be visible via the "Inspect" interface

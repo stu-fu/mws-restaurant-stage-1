@@ -1,30 +1,49 @@
-let restaurants,
-	neighborhoods,
-	cuisines
+let restaurants
 var map
 var markers = []
+const restaurantApi = 'http://localhost:1337/restaurants';
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
-	fetchNeighborhoods();
-	fetchCuisines();
+	fetchCusineAndNeighborhood();
+	fetchRestaurants();
 });
 
 /**
  * Fetch all neighborhoods and set their HTML.
  */
-fetchNeighborhoods = () => {
-	DBHelper.fetchNeighborhoods((error, neighborhoods) => {
-		if (error) { // Got an error
-			console.error(error);
-		} else {
-			self.neighborhoods = neighborhoods;
-			fillNeighborhoodsHTML();
-		}
-	});
-	console.log('neighbor loaded');
+fetchCusineAndNeighborhood = () => {
+	fetch(restaurantApi)
+		.then(function(response) {
+			return response.json();
+		}).then(function(myJson) {
+			console.log(myJson);
+			fillNeighborhoodsHTML(myJson);
+			fillCuisinesHTML(myJson);
+			openDb(myJson);
+		});
+}
+
+/**
+ * Fetch all neighborhoods and set their HTML.
+ */
+fetchRestaurants = (cuisine, neighborhood) => {
+	fetch(restaurantApi)
+		.then(function(response) {
+			return response.json();
+		}).then(function(myJson) {
+			let restaurants = myJson;
+
+			if (cuisine != 'all') { // filter by cuisine
+				restaurants = restaurants.filter(r => r.cuisine_type == cuisine);
+			}
+			if (neighborhood != 'all') { // filter by neighborhood
+				restaurants = restaurants.filter(r => r.neighborhood == neighborhood);
+			}
+			fillRestaurantsHTML(restaurants);
+		});
 }
 
 /**
@@ -32,7 +51,14 @@ fetchNeighborhoods = () => {
  */
 fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
 	const select = document.getElementById('neighborhoods-select');
-	neighborhoods.forEach(neighborhood => {
+	let neighborhoodSet = new Set();
+
+	for (let neighborhood in neighborhoods) {
+		var obj = neighborhoods[neighborhood].neighborhood;
+		neighborhoodSet.add(obj);
+	}
+
+	neighborhoodSet.forEach(neighborhood => {
 		const option = document.createElement('option');
 		option.innerHTML = neighborhood;
 		option.value = neighborhood;
@@ -41,26 +67,18 @@ fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
 }
 
 /**
- * Fetch all cuisines and set their HTML.
- */
-fetchCuisines = () => {
-	DBHelper.fetchCuisines((error, cuisines) => {
-		if (error) { // Got an error!
-			console.error(error);
-		} else {
-			self.cuisines = cuisines;
-			fillCuisinesHTML();
-		}
-	});
-}
-
-/**
  * Set cuisines HTML.
  */
 fillCuisinesHTML = (cuisines = self.cuisines) => {
 	const select = document.getElementById('cuisines-select');
+	let cusineSet = new Set();
 
-	cuisines.forEach(cuisine => {
+	for (let cuisine in cuisines) {
+		var obj = cuisines[cuisine].cuisine_type;
+		cusineSet.add(obj);
+	}
+
+	cusineSet.forEach(cuisine => {
 		const option = document.createElement('option');
 		option.innerHTML = cuisine;
 		option.value = cuisine;
@@ -97,14 +115,8 @@ updateRestaurants = () => {
 	const cuisine = cSelect[cIndex].value;
 	const neighborhood = nSelect[nIndex].value;
 
-	DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
-		if (error) { // Got an error!
-			console.error(error);
-		} else {
-			resetRestaurants(restaurants);
-			fillRestaurantsHTML();
-		}
-	})
+	resetRestaurants(restaurants);
+	fetchRestaurants(cuisine, neighborhood);
 }
 
 /**
@@ -134,9 +146,10 @@ resetRestaurants = (restaurants) => {
 fillRestaurantsHTML = (restaurants = self.restaurants) => {
 	const ul = document.getElementById('restaurants-list');
 
-	restaurants.forEach(restaurant => {
-		ul.append(createRestaurantHTML(restaurant));
-	});
+	for (let restaurant in restaurants) {
+		var obj = restaurants[restaurant];
+		ul.append(createRestaurantHTML(obj));
+	}
 
 	if(restaurants.length === 0) {
 		const p = document.createElement('p');
@@ -147,7 +160,7 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 		parent.insertBefore(p, ul);
 	}
 
-	addMarkersToMap();
+	addMarkersToMap(restaurants);
 }
 
 /**
@@ -159,7 +172,7 @@ createRestaurantHTML = (restaurant) => {
 	const image = document.createElement('img');
 	image.className = 'restaurant-img';
 	image.setAttribute('alt','Picture of ' + restaurant.name);
-	image.src = DBHelper.imageUrlForRestaurant(restaurant);
+	image.src = '/img/' + restaurant.photograph + '.jpg';
 	li.append(image);
 
 	const content = document.createElement('div');
@@ -204,3 +217,40 @@ addMarkersToMap = (restaurants = self.restaurants) => {
 	});
 }
 
+openDb = (restaurants) => {
+	const dbName = "RestaurantList";
+
+	var request = indexedDB.open(dbName, 3);
+	var customerObjectStore;
+
+	request.onerror = function(event) {
+	// Handle errors.
+	};
+	request.onupgradeneeded = function(event) {
+	var db = event.target.result;
+	var res = restaurants;
+	console.log('res', res);
+
+	// Create an objectStore to hold information about our customers. We're
+	// going to use "ssn" as our key path because it's guaranteed to be
+	// unique - or at least that's what I was told during the kickoff meeting.
+	var objectStore = db.createObjectStore("restaurants", { keyPath: "id" });
+
+	// Create an index to search customers by name. We may have duplicates
+	// so we can't use a unique index.
+	objectStore.createIndex("name", "name", { unique: false });
+
+
+	// Use transaction oncomplete to make sure the objectStore creation is
+	// finished before adding data into it.
+	objectStore.transaction.oncomplete = function(event) {
+		// Store values in the newly created objectStore.
+		customerObjectStore = db.transaction("restaurants", "readwrite").objectStore("restaurants");
+		restaurants.forEach(function(customer) {
+		  customerObjectStore.add(customer);
+		});
+		console.log('res', res);
+
+	};
+	};
+}
