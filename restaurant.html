@@ -8,14 +8,14 @@
 		<title>Restaurant Reviews</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="theme-color" content="#ffffff">
 
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 		<link rel="manifest" href="/site.webmanifest">
 		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#c48200">
-		<meta name="msapplication-TileColor" content="#da532c">
-		<meta name="theme-color" content="#ffffff">
 	</head>
 
 	<body class="inside">
@@ -42,17 +42,17 @@
 				</h1>
 			</nav>
 
-			<ul class="breadcrumbs" id="breadcrumb" >
-				<li><a href="/">Home</a></li>
+			<ul class="breadcrumbs" id="breadcrumb" aria-label="Breadcrumb">
+				<li><a href="/" >Home</a></li>
 			</ul>
 		</header>
 
-		<main role="main" id="maincontent">
+		<main role="main" id="maincontent" tabindex="-1">
 			<section class="restaurant-container" id="restaurant-container" aria-labelledby="restaurant-name">
 			</section>
 
 			<section id="map-container" aria-hidden="true" aria-label="Map of Restaurant">
-				<div id="map"></div>
+				<div id="map" aria-label="location" role="application"></div>
 			</section>
 
 			<section class="reviews-container" id="reviews-container" aria-labelledby="reviews-title">
@@ -64,20 +64,8 @@
 		<footer role="contentinfo" id="footer">
 		Copyright &copy; 2018 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
 		</footer>
-		<script>
-			if ('serviceWorker' in navigator) {
-				window.addEventListener('load', function() {
-					navigator.serviceWorker.register('service-worker.js').then(function(registration) {
-						// Registration was successful
-						console.log('ServiceWorker registration successful with scope: ', registration.scope);
-					}, function(err) {
-						// registration failed :(
-						console.log('ServiceWorker registration failed: ', err);
-					});
-				});
-			}
-			console.log('something!');
-			</script>
+
+		<script src-"js/min/register-worker.min.js"></script>
 		<script src="js/min/dbhelper.min.js"></script>
 		<script src="js/min/restaurant_info.min.js"></script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkPiIfhu2TpdEMAygBHuZFJ9bD_58GUmY&libraries=places&callback=initMap"></script>
