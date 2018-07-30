@@ -187,6 +187,10 @@ nav h1 a:focus .icon-gavel {
 	border-bottom:2px solid #ccc;
 }
 
+.breadcrumbs ul {
+	list-style:none; margin:0; padding:0; text-align:left;
+}
+
 @media(min-width:950px){
 	.breadcrumbs {
 		width:50%;
