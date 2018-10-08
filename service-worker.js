@@ -13,7 +13,7 @@
 
 //importScripts('../serviceworker-cache-polyfill.js');
 
-var CACHE_VERSION = 60;
+var CACHE_VERSION = 155;
 var CURRENT_CACHES = {
   prefetch: 'prefetch-cache-v' + CACHE_VERSION
 };
@@ -23,6 +23,8 @@ self.addEventListener('install', function(event) {
 
   var urlsToPrefetch = [
     '/',
+    'index.html',
+    'restaurant.html',
     'css/min/styles.min.css',
     'img/1.jpg',
     'img/2.jpg',
@@ -44,9 +46,19 @@ self.addEventListener('install', function(event) {
     'img/min/8.jpg',
     'img/min/9.jpg',
     'img/min/10.jpg',
-    'js/min/dbhelper.min.js',
-    'js/min/main.min.js',
-    'js/min/restaurant_info.min.js',
+    'img/min/1.webp',
+    'img/min/2.webp',
+    'img/min/3.webp',
+    'img/min/4.webp',
+    'img/min/5.webp',
+    'img/min/6.webp',
+    'img/min/7.webp',
+    'img/min/8.webp',
+    'img/min/9.webp',
+    'img/min/10.jpg',
+    'js/min/index.min.js',
+    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCkPiIfhu2TpdEMAygBHuZFJ9bD_58GUmY&libraries=places&callback=initMap',
+    'js/min/res.min.js'
   ];
 
   // All of these logging statements should be visible via the "Inspect" interface

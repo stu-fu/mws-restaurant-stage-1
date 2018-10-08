@@ -1,0 +1,217 @@
+@charset "utf-8";
+
+/* CSS Document */
+
+* { box-sizing:border-box; }
+
+body,
+td,
+th,
+p {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	color: #333;
+	line-height: 1.5;
+}
+
+body {
+	background-color: #fdfdfd;
+	margin: 0;
+	position:relative;
+}
+
+ul,
+li {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	color: #333;
+}
+
+a {
+	color: orange;
+	text-decoration: none;
+}
+
+a:hover,
+a:focus {
+	color: #3397db;
+	text-decoration: none;
+}
+
+a img {
+	border: none 0px #fff;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0 0 20px;
+}
+
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+	display: block;
+}
+
+figure { margin:0; }
+
+.visually-hidden {
+	position:absolute;
+	left:-9999em;
+}
+
+.skip-link {
+	display:block;
+	padding:6px;
+	text-align:center;
+	background:#fff;
+	position:absolute; z-index:4;
+	left:-9999em;
+	width:100%;
+}
+.skip-link:focus {
+	position:absolute;
+	left:0;
+}
+
+#maincontent {
+  	background-color: #f3f3f3;
+  	min-height: 100%;
+}
+
+.inside #maincontent {
+  	padding-top:143px;
+}
+
+@media(min-width:950px) {
+	.inside #maincontent {
+		padding-top:30px;
+	}
+}
+
+
+/* ====================== Navigation ====================== */
+
+nav {
+	width: 100%;
+	padding:30px;
+	background-color: #252831;
+	text-align:center;
+}
+
+nav h1 {
+  	margin: auto;
+}
+
+nav h1 a {
+	color: #fff;
+	font-size: 14pt;
+	font-weight: 200;
+	letter-spacing: 10px;
+	text-transform: uppercase;
+	text-align: center;
+	word-wrap: break-word;
+	transition:all .2s ease-out;
+}
+
+.icon-gavel {
+	width: 0px;
+    height: 28px;
+    fill: #fff;
+    position: relative;
+	top: 7px;
+	left:-5px;
+	transition:all .3s;
+}
+
+nav h1 a strong {
+	letter-spacing: 10px;
+	transition:all .3s;
+}
+
+nav h1 a:hover,
+nav h1 a:focus {
+	color:#c36900;
+}
+
+nav h1 a:hover strong,
+nav h1 a:focus strong {
+	letter-spacing:5px;
+}
+
+
+nav h1 a:hover .icon-gavel,
+nav h1 a:focus .icon-gavel {
+	width:35px;
+}
+
+.breadcrumbs {
+    padding: 10px 40px 16px;
+    list-style: none;
+    background-color: #eee;
+    font-size: 17px;
+    margin: 0;
+	border-bottom:2px solid #ccc;
+}
+
+.breadcrumbs ul {
+	list-style:none; margin:0; padding:0; text-align:left;
+}
+
+@media(min-width:950px){
+	.breadcrumbs {
+		width:50%;
+	}
+
+	.breadcrumbs {
+		border-right:2px solid #ccc;
+	}
+}
+
+/* Display list items side by side */
+.breadcrumbs li {
+    display: inline;
+}
+
+/* Add a slash symbol (/) before/behind each list item */
+.breadcrumbs li+li:before {
+    padding: 8px;
+    color: black;
+    content: "/\00a0";
+}
+
+/* Add a color to all links inside the list */
+.breadcrumbs li a {
+    color: #01447e;
+    text-decoration: none;
+}
+
+/* Add a color on mouse-over */
+.breadcrumbs li a:hover {
+    text-decoration: underline;
+}
+
+
+/* ====================== Map ====================== */
+
+#map {
+    height: 400px;
+    width: 100%;
+    background-color: #ccc;
+}
+
+

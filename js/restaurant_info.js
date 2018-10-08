@@ -76,7 +76,8 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 
 	const imgPath = DBHelper.imageUrlForRestaurant(restaurant);
 	const minImg = imgPath.replace('img/', 'img/min/');
-	restaurantImage.setAttribute('srcset', minImg + ' 300w,' + imgPath +  ' 600w');
+	const webpImg = minImg.replace('.jpg', '.webp');
+	restaurantImage.setAttribute('srcset', webpImg + ' 300w,' + imgPath +  ' 600w');
 	restaurantImage.setAttribute('sizes', '(max-width: 850px) 300px');
 	restaurantImage.src = imgPath;
 

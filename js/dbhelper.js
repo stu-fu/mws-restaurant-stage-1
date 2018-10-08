@@ -8,27 +8,76 @@ class DBHelper {
 	 * Change this to restaurants.json file location on your server.
 	 */
 	static get DATABASE_URL() {
-		const port = 8000 // Change this to your server port
-		return `http://localhost:${port}/data/restaurants.json`;
+		const port = 1337 // Change this to your server port
+		return `http://localhost:${port}/restaurants`;
 	}
+
+
+
 
 	/**
 	 * Fetch all restaurants.
 	 */
 	static fetchRestaurants(callback) {
-		let xhr = new XMLHttpRequest();
-		xhr.open('GET', DBHelper.DATABASE_URL);
-		xhr.onload = () => {
-			if (xhr.status === 200) { // Got a success response from server!
-				const json = JSON.parse(xhr.responseText);
-				const restaurants = json.restaurants;
-				callback(null, restaurants);
-			} else { // Oops!. Got an error from server.
-				const error = (`Request failed. Returned status of ${xhr.status}`);
-				callback(error, null);
-			}
+
+		// This works on all devices/browsers, and uses IndexedDBShim as a final fallback
+		let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+
+		let open = indexedDB.open("Restaurants", 1);
+
+		let restaurantList = [];
+
+		// Create the schema
+		open.onupgradeneeded = function() {
+			let db = open.result;
+			let store = db.createObjectStore("RestaurantStore", {keyPath: "id"});
+			var customerObjectStore;
+			console.log('idb upgrade needed');
+
+
+			fetch(DBHelper.DATABASE_URL)
+				.then(function(response) {
+					return response.json();
+				})
+				.then(function(restaurants){
+					callback(null, restaurants);
+					store.transaction.oncomplete = function() {
+						customerObjectStore = db.transaction("RestaurantStore", "readwrite").objectStore("RestaurantStore");
+						restaurants.forEach(function(customer) {
+							customerObjectStore.add(customer);
+						});
+					};
+				})
+				.catch(function(){
+					const error = (`Request failed.`);
+					callback(error, null);
+				})
 		};
-		xhr.send();
+
+		open.onsuccess = function() {
+			// Start a new transaction
+			var db = open.result;
+			var tx = db.transaction("RestaurantStore", "readwrite");
+			var store = tx.objectStore("RestaurantStore");
+			console.log('idb success')
+
+			store.openCursor().onsuccess = function(event) {
+				var cursor = event.target.result;
+				if(cursor) {
+					restaurantList.push(cursor.value)
+					cursor.continue();
+				} else {
+					callback(null, restaurantList);
+					console.log('list', restaurantList);
+					console.log('Entries all displayed.');
+				}
+			};
+
+			// Close the db when the transaction is done
+			tx.oncomplete = function() {
+				db.close();
+			};
+		}
 	}
 
 	/**
@@ -150,7 +199,8 @@ class DBHelper {
 	 * Restaurant image URL.
 	 */
 	static imageUrlForRestaurant(restaurant) {
-		return (`/img/${restaurant.photograph}`);
+		const img = `/img/min/${restaurant.photograph}.webp`;
+		return img;
 	}
 
 	/**

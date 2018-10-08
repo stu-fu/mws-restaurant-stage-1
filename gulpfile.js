@@ -4,6 +4,8 @@ var rename = require('gulp-rename');
 var babel = require('gulp-babel');
 let autoprefixer = require('gulp-autoprefixer');
 let resizer = require('gulp-images-resizer');
+const webp = require('gulp-webp');
+var concat = require('gulp-concat');
 
 // CSS - Minify
 gulp.task('css-min', function () {
@@ -18,10 +20,18 @@ gulp.task('css-min', function () {
 });
 
 // Global JS - Concatenate, babel, minify, and rename
-gulp.task('handle-scripts', function() {
-    return gulp.src('js/*.js')
+gulp.task('main-scripts', function() {
+    return gulp.src(['js/register-worker.js', 'js/dbhelper.js', 'js/main.js'])
         .pipe(babel({ compact:true }))
-        .pipe(rename({suffix: '.min'}))
+        .pipe(concat('index.min.js'))
+        .pipe(gulp.dest('js/min'))
+});
+
+// Global JS - Concatenate, babel, minify, and rename
+gulp.task('res-scripts', function() {
+    return gulp.src(['js/register-worker.js', 'js/dbhelper.js', 'js/restaurant_info.js'])
+        .pipe(babel({ compact:true }))
+        .pipe(concat('res.min.js'))
         .pipe(gulp.dest('js/min'))
 });
 
@@ -32,8 +42,9 @@ gulp.task('images', function() {
             format: "jpg",
             width: "50%"
         }))
+    .pipe(webp())
     .pipe(gulp.dest('img/min'));
 });
 
 
-gulp.task('default', ['css-min', 'handle-scripts', 'images'], function() { });
+gulp.task('default', ['css-min', 'main-scripts', 'res-scripts', 'images'], function() { });

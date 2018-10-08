@@ -22,8 +22,10 @@
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-babel": "^7.0.1",
+    "gulp-concat": "^2.6.1",
     "gulp-cssmin": "^0.2.0",
     "gulp-image-resize": "^0.13.0",
-    "gulp-images-resizer": "0.0.5"
+    "gulp-images-resizer": "0.0.5",
+    "gulp-webp": "^3.0.0"
   }
 }
