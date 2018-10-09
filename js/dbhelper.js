@@ -40,13 +40,13 @@ class DBHelper {
 					return response.json();
 				})
 				.then(function(restaurants){
-					callback(null, restaurants);
 					store.transaction.oncomplete = function() {
 						customerObjectStore = db.transaction("RestaurantStore", "readwrite").objectStore("RestaurantStore");
 						restaurants.forEach(function(customer) {
 							customerObjectStore.add(customer);
 						});
 					};
+					callback(null, restaurants);
 				})
 				.catch(function(){
 					const error = (`Request failed.`);
