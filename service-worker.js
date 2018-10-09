@@ -13,7 +13,7 @@
 
 //importScripts('../serviceworker-cache-polyfill.js');
 
-var CACHE_VERSION = 155;
+var CACHE_VERSION = 160;
 var CURRENT_CACHES = {
   prefetch: 'prefetch-cache-v' + CACHE_VERSION
 };
@@ -25,6 +25,16 @@ self.addEventListener('install', function(event) {
     '/',
     'index.html',
     'restaurant.html',
+    'restaurant.html?id=1',
+    'restaurant.html?id=2',
+    'restaurant.html?id=3',
+    'restaurant.html?id=4',
+    'restaurant.html?id=5',
+    'restaurant.html?id=6',
+    'restaurant.html?id=7',
+    'restaurant.html?id=8',
+    'restaurant.html?id=9',
+    'restaurant.html?id=10',
     'css/min/styles.min.css',
     'img/1.jpg',
     'img/2.jpg',
