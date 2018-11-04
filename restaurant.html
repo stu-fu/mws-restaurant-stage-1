@@ -3,14 +3,11 @@
 <html lang="en-US">
 	<head>
 		<link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
-		<link rel="stylesheet" href="css/min/styles.min.css" />
-
 		<title>Restaurant Reviews</title>
-
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<style type="text/css">@charset "utf-8";body,li,p,td,th,ul{font-size:10pt;color:#333;font-family:Arial,Helvetica,sans-serif}a,a:focus,a:hover{text-decoration:none}body,h1,h2,h3,h4,h5,h6,li,p,td,th,ul{font-family:Arial,Helvetica,sans-serif}body,figure{margin:0}.skip-link,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}.skip-link,.visually-hidden{left:-9999em;position:absolute}#footer a:focus,#footer a:hover,nav h1 a{color:#fff}#footer,nav h1 a{text-transform:uppercase;text-align:center}#footer,.skip-link,nav,nav h1 a{text-align:center}*{-webkit-box-sizing:border-box;box-sizing:border-box}body,p,td,th{line-height:1.5}body{background-color:#fdfdfd;position:relative}a{color:orange}a:focus,a:hover{color:#3397db}a img{border:0 #fff}h1,h2,h3,h4,h5,h6{margin:0 0 20px}.skip-link{padding:6px;background:#fff;z-index:4;width:100%}.skip-link:focus{position:absolute;left:0}#maincontent{background-color:#f3f3f3;min-height:100%}.inside #maincontent{padding-top:143px}@media(min-width:950px){.inside #maincontent{padding-top:30px}}#footer{background-color:#444;color:#ccc;font-size:8pt;letter-spacing:1px;padding:25px}#footer a{text-decoration:underline}nav{width:100%;padding:30px;background-color:#252831}nav h1{margin:auto}nav h1 a{font-size:14pt;font-weight:200;letter-spacing:10px;word-wrap:break-word;-webkit-transition:all .2s ease-out;-o-transition:all .2s ease-out;transition:all .2s ease-out}.icon-gavel{width:0;height:28px;fill:#fff;position:relative;top:7px;left:-5px;-webkit-transition:all .3s;-o-transition:all .3s;transition:all .3s}nav h1 a strong{letter-spacing:10px;-webkit-transition:all .3s;-o-transition:all .3s;transition:all .3s}nav h1 a:focus,nav h1 a:hover{color:#c36900}nav h1 a:focus strong,nav h1 a:hover strong{letter-spacing:5px}nav h1 a:focus .icon-gavel,nav h1 a:hover .icon-gavel{width:35px}.breadcrumbs{padding:10px 40px 16px;list-style:none;background-color:#eee;font-size:17px;margin:0;border-bottom:2px solid #ccc}.breadcrumbs ul{list-style:none;margin:0;padding:0;text-align:left}@media(min-width:950px){.breadcrumbs{width:50%;border-right:2px solid #ccc}}.breadcrumbs li{display:inline}.breadcrumbs li+li:before{padding:8px;color:#000;content:"/\00a0"}.breadcrumbs li a{color:#01447e;text-decoration:none}.breadcrumbs li a:hover{text-decoration:underline}#map{height:400px;width:100%;background-color:#ccc}.filter-options{width:100%;padding:20px;background-color:#3397DB;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}#restaurants-list li,.filter-options select{background-color:#fff;font-family:Arial,sans-serif}.filter-options h2{color:#fff;font-size:1.5rem;font-weight:400;line-height:1;margin:0 10px 10px}.filter-options select{border:1px solid #fff;font-size:11pt;height:35px;letter-spacing:0;margin:10px;padding:0 10px;width:200px}#restaurants-list{background-color:#f3f3f3;list-style:none;margin:0;padding:30px 15px 60px;text-align:center}#no-results:not(:empty){padding:20px;text-align:center;margin:40px auto;width:100%;max-width:540px;font-size:1.3rem}#restaurants-list li{position:relative;border:2px solid #ccc;margin:15px;min-height:380px;padding:0 0 90px;text-align:left;border-radius:15px 0;overflow:hidden;-webkit-transition:all .2s;-o-transition:all .2s;transition:all .2s}#restaurants-list li a,.write-review button{text-align:center;text-decoration:none;text-transform:uppercase;-webkit-transition:all .3s;-o-transition:all .3s;transition:all .3s}#restaurants-list .restaurant-img{background-color:#ccc;display:block;margin:0;max-width:100%;min-height:248px;min-width:100%}#restaurants-list .restaurant-summary{padding:0 30px}#restaurants-list li h3{color:#7d4401;font-family:Arial,sans-serif;font-size:1.2em;font-weight:700;letter-spacing:.5px;line-height:1.3;margin:20px 0 10px;text-transform:uppercase}#restaurants-list p{margin:0;font-size:11pt}#restaurants-list li a{position:absolute;bottom:20px;background-color:#7f4400;border-bottom:3px solid #eee;color:#fff;display:inline-block;font-size:10pt;margin:15px 0 0;padding:8px 30px 10px}#restaurants-list li a:focus,#restaurants-list li a:hover{background:#333;border-bottom:3px solid #c36900}@media(min-width:640px){#restaurants-list{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap}#restaurants-list li{max-width:calc(50% - 30px);-webkit-box-flex:1;-webkit-flex-grow:1;-ms-flex-positive:1;flex-grow:1}}@media(min-width:950px){#restaurants-list li{max-width:calc(33% - 30px)}}@media(min-width:1150px){#restaurants-list li{max-width:calc(25% - 30px)}}.inside header{position:fixed;top:0;width:100%;z-index:1000}.inside h2{color:#c36900;font-size:24pt;font-weight:300;letter-spacing:-1px;padding-bottom:1pt}.inside #map-container{background:#00f;width:100%;height:300px}@media(min-width:950px){.inside #map-container{position:fixed;right:0;top:80px;width:50%;height:87%}}.inside #map{background-color:#ccc;height:100%;width:100%}@media(min-width:950px){.inside #footer{bottom:0;position:absolute;width:50%}}.restaurant-name{color:#c36900;font-family:Arial,sans-serif;font-size:20pt;font-weight:200;letter-spacing:0;margin:15px 0 30px;text-transform:uppercase;line-height:1.1}.restaurant-img{width:90%;border-radius:15px 0 0}.restaurant-address{font-size:12pt;margin:10px 0}.restaurant-cuisine{background-color:#333;color:#ddd;font-size:12pt;font-weight:300;letter-spacing:10px;margin:0 0 20px;padding:2px 0;text-align:center;text-transform:uppercase;width:90%;border-radius:0 0 15px}.restaurant-container,.reviews-container{border-bottom:1px solid #d9d9d9;border-top:1px solid #fff;padding:30px 40px}@media(min-width:630px) and (max-width:950px){.restaurant-content{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}.restaurant-image-container{width:65%}}@media(min-width:950px){.restaurant-container,.reviews-container{padding:140px 40px 30px;border-right:2px solid #ccc;width:50%}.reviews-list li{width:85%}}.reviews-container{padding:30px 40px 80px}.reviews-list{margin:0;padding:0}.reviews-list li{background-color:#fff;border:2px solid #f3f3f3;display:block;list-style-type:none;margin:0 0 30px;overflow:hidden;position:relative;border-radius:15px 0}.reviews-list li .rating-header{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;padding:15px 30px;background:#333;color:#fff}.reviews-list li h3{font-weight:400;margin-bottom:0;-webkit-box-flex:1;-webkit-flex-grow:1;-ms-flex-positive:1;flex-grow:1;font-size:1.3em;letter-spacing:1px}.reviews-list li time{display:block;color:#ddd}.reviews-list li p{margin:0 0 10px;padding:15px 30px}.reviews-list li .rating{display:inline-block;padding:5px 15px;margin:30px 30px 0;border-radius:6px;color:#fff;text-transform:uppercase}.reviews-list li .rating-1{background:#8b0000;border-bottom:3px solid red}.reviews-list li .rating-2{background:#ff8c00}.reviews-list li .rating-3{background:#966100}.reviews-list li .rating-4{background:#646300}.reviews-list li .rating-5{background:#3a5d3a;border-bottom:3px solid gold}#restaurant-hours td{color:#666}.write-review{background:#fff;padding:20px;width:90%;border-radius:8px;border:4px solid #ddd}.write-review label{display:block;font-weight:700;margin-bottom:5px;margin-top:15px}.write-review input,.write-review select,.write-review textarea{width:300px;border:1px solid #333;margin-bottom:15px;border-radius:0;padding:7px}.write-review input:focus,.write-review input:hover,.write-review select:focus,.write-review select:hover,.write-review textarea:focus,.write-review textarea:hover{border:1px solid #ccc}.write-review button{display:inline-block;background-color:#7f4400;color:#fff;padding:8px 30px 10px;font-size:10pt;border:0;border-bottom:3px solid #eee;cursor:pointer}.write-review button:focus,.write-review button:hover{background:#333;border-bottom:3px solid #c36900}.favorite{background:0 0;border:0;cursor:pointer;margin-bottom:15px}.favorite svg{width:20px;height:20px}.favorite.favorited svg{fill:#ff0}.favorite span{position:relative;top:-5px;margin-left:15px}</style>
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="theme-color" content="#ffffff">
-
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -20,16 +17,19 @@
 
 	<body class="inside">
 		<header role="banner">
-			<div class="svg-legend" aria-hidden="true">
-				<svg focusable="false" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-					<defs>
-						<symbol id="icon-gavel" viewBox="0 0 28 28">
-							<title>gavel</title>
-							<path d="M27.672 24c0 0.531-0.219 1.047-0.578 1.406l-1.672 1.687c-0.375 0.359-0.891 0.578-1.422 0.578s-1.047-0.219-1.406-0.578l-5.672-5.688c-0.375-0.359-0.594-0.875-0.594-1.406 0-0.594 0.25-1.078 0.672-1.5l-4-4-1.969 1.969c-0.141 0.141-0.328 0.219-0.531 0.219s-0.391-0.078-0.531-0.219c0.469 0.469 0.906 0.812 0.906 1.531 0 0.406-0.156 0.766-0.438 1.062-0.531 0.562-1.094 1.313-1.937 1.313-0.391 0-0.781-0.156-1.062-0.438l-6.375-6.375c-0.281-0.281-0.438-0.672-0.438-1.062 0-0.844 0.75-1.406 1.313-1.937 0.297-0.281 0.656-0.438 1.062-0.438 0.719 0 1.062 0.438 1.531 0.906-0.141-0.141-0.219-0.328-0.219-0.531s0.078-0.391 0.219-0.531l5.437-5.437c0.141-0.141 0.328-0.219 0.531-0.219s0.391 0.078 0.531 0.219c-0.469-0.469-0.906-0.812-0.906-1.531 0-0.406 0.156-0.766 0.438-1.062 0.531-0.562 1.094-1.313 1.937-1.313 0.391 0 0.781 0.156 1.062 0.438l6.375 6.375c0.281 0.281 0.438 0.672 0.438 1.062 0 0.844-0.75 1.406-1.313 1.937-0.297 0.281-0.656 0.438-1.062 0.438-0.719 0-1.062-0.438-1.531-0.906 0.141 0.141 0.219 0.328 0.219 0.531s-0.078 0.391-0.219 0.531l-1.969 1.969 4 4c0.422-0.422 0.906-0.672 1.5-0.672 0.531 0 1.047 0.219 1.422 0.578l5.672 5.672c0.359 0.375 0.578 0.891 0.578 1.422z"></path>
-						</symbol>
-					</defs>
-				</svg>
-			</div>
+				<div class="svg-legend" aria-hidden="true">
+					<svg focusable="false" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+						<defs>
+							<symbol id="icon-gavel" viewBox="0 0 28 28">
+								<title>gavel</title>
+								<path d="M27.672 24c0 0.531-0.219 1.047-0.578 1.406l-1.672 1.687c-0.375 0.359-0.891 0.578-1.422 0.578s-1.047-0.219-1.406-0.578l-5.672-5.688c-0.375-0.359-0.594-0.875-0.594-1.406 0-0.594 0.25-1.078 0.672-1.5l-4-4-1.969 1.969c-0.141 0.141-0.328 0.219-0.531 0.219s-0.391-0.078-0.531-0.219c0.469 0.469 0.906 0.812 0.906 1.531 0 0.406-0.156 0.766-0.438 1.062-0.531 0.562-1.094 1.313-1.937 1.313-0.391 0-0.781-0.156-1.062-0.438l-6.375-6.375c-0.281-0.281-0.438-0.672-0.438-1.062 0-0.844 0.75-1.406 1.313-1.937 0.297-0.281 0.656-0.438 1.062-0.438 0.719 0 1.062 0.438 1.531 0.906-0.141-0.141-0.219-0.328-0.219-0.531s0.078-0.391 0.219-0.531l5.437-5.437c0.141-0.141 0.328-0.219 0.531-0.219s0.391 0.078 0.531 0.219c-0.469-0.469-0.906-0.812-0.906-1.531 0-0.406 0.156-0.766 0.438-1.062 0.531-0.562 1.094-1.313 1.937-1.313 0.391 0 0.781 0.156 1.062 0.438l6.375 6.375c0.281 0.281 0.438 0.672 0.438 1.062 0 0.844-0.75 1.406-1.313 1.937-0.297 0.281-0.656 0.438-1.062 0.438-0.719 0-1.062-0.438-1.531-0.906 0.141 0.141 0.219 0.328 0.219 0.531s-0.078 0.391-0.219 0.531l-1.969 1.969 4 4c0.422-0.422 0.906-0.672 1.5-0.672 0.531 0 1.047 0.219 1.422 0.578l5.672 5.672c0.359 0.375 0.578 0.891 0.578 1.422z"></path>
+							</symbol><symbol id="icon-star" viewBox="0 0 26 28">
+									<title>star-o</title>
+									<path d="M17.766 15.687l4.781-4.641-6.594-0.969-2.953-5.969-2.953 5.969-6.594 0.969 4.781 4.641-1.141 6.578 5.906-3.109 5.891 3.109zM26 10.109c0 0.281-0.203 0.547-0.406 0.75l-5.672 5.531 1.344 7.812c0.016 0.109 0.016 0.203 0.016 0.313 0 0.422-0.187 0.781-0.641 0.781-0.219 0-0.438-0.078-0.625-0.187l-7.016-3.687-7.016 3.687c-0.203 0.109-0.406 0.187-0.625 0.187-0.453 0-0.656-0.375-0.656-0.781 0-0.109 0.016-0.203 0.031-0.313l1.344-7.812-5.688-5.531c-0.187-0.203-0.391-0.469-0.391-0.75 0-0.469 0.484-0.656 0.875-0.719l7.844-1.141 3.516-7.109c0.141-0.297 0.406-0.641 0.766-0.641s0.625 0.344 0.766 0.641l3.516 7.109 7.844 1.141c0.375 0.063 0.875 0.25 0.875 0.719z"></path>
+									</symbol>
+						</defs>
+					</svg>
+				</div>
 
 			<nav role="navigation">
 				<h1>
@@ -60,6 +60,30 @@
 			<section class="reviews-container" id="reviews-container" aria-labelledby="reviews-title">
 				<h2 id="reviews-title">Reviews</h2>
 				<ul class="reviews-list" id="reviews-list"></ul>
+				<h2>Write your own review!</h2>
+				<div class="write-review" id="review-form">
+					<!--<form onsubmit="postReview(e)">-->
+						<div>
+							<label for="review-name">Your Name</label>
+							<input required type="text" id="review-name" />
+						</div>
+						<div>
+							<label for="review-rating">Your Rating</label>
+							<select id="review-rating">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+						<div>
+							<label for="review-message">Your Message</label>
+							<textarea required id="review-message"></textarea>
+						</div>
+						<button onclick="postReview()">Submit Review</button>
+					<!--</form>-->
+				</div>
 			</section>
 		</main>
 

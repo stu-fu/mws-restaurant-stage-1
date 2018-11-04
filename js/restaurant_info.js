@@ -51,6 +51,9 @@ fetchRestaurantFromURL = (callback) => {
 fillRestaurantHTML = (restaurant = self.restaurant) => {
 	const restaurantContainer = document.getElementById('restaurant-container');
 
+	const addID = document.getElementById("review-form")
+	addID.setAttribute('data-res-id', restaurant.id)
+
 	const restaurantContainerContent = document.createElement('div');
 	restaurantContainerContent.setAttribute('class', 'restaurant-content');
 
@@ -61,6 +64,15 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 	restaurantHeading.setAttribute('id','restaurant-name');
 	restaurantHeading.className = 'restaurant-name';
 	restaurantHeading.innerHTML = restaurant.name;
+
+	const restaurantStar = document.createElement('div')
+	let favoriteChoice;
+	if(restaurant.is_favorite == "true") {
+		favoriteChoice = "favorite favorited";
+	} else {
+		favoriteChoice = "favorite";
+	}
+	restaurantStar.innerHTML = '<button class="' + favoriteChoice + '" onclick="favoriteItem(' + restaurant.id + ')" id="favorite-this-' + restaurant.id + '"><svg class="icon icon-star"><use xlink:href="#icon-star"></use><span>Favorite</span></svg></button>';
 
 	const restaurantAddress = document.createElement('p');
 	restaurantAddress.setAttribute('id','restaurant-address');
@@ -94,6 +106,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 	restaurantContainerContent.append(restaurantContainerInfo);
 
 	restaurantContainer.append(restaurantHeading);
+	restaurantContainer.append(restaurantStar);
 	restaurantContainer.append(restaurantContainerContent);
 
 	// fill operating hours
@@ -102,8 +115,103 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 	}
 
 	// fill reviews
-	fillReviewsHTML();
-	fillRestaurantSchema();
+	fetchReviews();
+	//fillRestaurantSchema();
+}
+
+favoriteItem = (restaurant) => {
+	let restaurantId = restaurant.id;
+	let thisbutton = document.getElementById('favorite-this-' + restaurant);
+	if ( thisbutton.classList.contains('favorited') ) {
+		thisbutton.classList.remove('favorited');
+		fetch('http://localhost:1337/restaurants/' + restaurant + '/?is_favorite=false', {
+			method: 'put'
+		})
+		.then(function(response) {
+			return response.json();
+		})
+		.then(function(restaurants){})
+		.catch(function(error){
+			/*let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+			let open = indexedDB.open("Restaurants", 2);
+			open.onsuccess = function(event) {
+				var db = event.target.result;
+				var changedFav = {
+					id : restaurant.id,
+					is_favorite : "false"
+				};
+				var updateFav = JSON.stringify(changedFav)
+				db.transaction("ChangedFavs", "readwrite").objectStore("ChangedFavs").add(changedFav);
+			}*/
+		})
+
+		let open = indexedDB.open("Restaurants", 2);
+		open.onsuccess = function() {
+			let db = open.result;
+			const transaction = db.transaction('RestaurantStore', 'readwrite');
+			const objectStore = transaction.objectStore('RestaurantStore');
+			objectStore.openCursor().onsuccess = function(event) {
+				const cursor = event.target.result;
+				if (cursor) {
+					if (cursor.value.restaurant_id === restaurantId) {
+						const updateData = cursor.value;
+						updateData.is_favorite = "false";
+						const request = cursor.update(updateData);
+						request.onsuccess = function() {
+						  console.log('A better album year?');
+						};
+					};
+					cursor.continue()
+				} else {
+					console.log('Entries displayed.');
+				}
+			};
+		};
+	} else {
+		thisbutton.classList.add('favorited');
+		fetch('http://localhost:1337/restaurants/' + restaurant + '/?is_favorite=true', {
+			method: 'put'
+		})
+		.then(function(response) {
+			return response.json();
+		})
+		.then(function(reviews){})
+		.catch(function(error){
+			/*let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+			let open = indexedDB.open("Restaurants", 2);
+			open.onsuccess = function(event) {
+				var db = event.target.result;
+				var changedFav = {
+					id : restaurant.id,
+					is_favorite : "true"
+				};
+				var updateFav = JSON.stringify(changedFav)
+				db.transaction("ChangedFavs", "readwrite").objectStore("ChangedFavs").add(changedFav);
+			}*/
+		})
+		let open = indexedDB.open("Restaurants", 2);
+		open.onsuccess = function() {
+			let db = open.result;
+			const transaction = db.transaction('RestaurantStore', 'readwrite');
+			const objectStore = transaction.objectStore('RestaurantStore');
+			objectStore.openCursor().onsuccess = function(event) {
+				const cursor = event.target.result;
+				if (cursor) {
+					if (cursor.value.restaurant_id === restaurantId) {
+						const updateData = cursor.value;
+						updateData.is_favorite = "true";
+						const request = cursor.update(updateData);
+						request.onsuccess = function() {
+						  console.log('A better album year?');
+						};
+					};
+					cursor.continue();
+				} else {
+					console.log('Entries displayed.');
+				}
+			};
+		};
+	}
 }
 
 
@@ -126,7 +234,6 @@ createReviewSchemaAverage = (review, reviewCount) => {
 
 /**
  * Create JSON-LD text for each review
- */
 createReviewSchema = (review, reviewCount) => {
 	const ul = document.getElementById('reviews-list');
 	let reviewsItems = ``;
@@ -158,10 +265,11 @@ createReviewSchema = (review, reviewCount) => {
 	return reviewsItems;
 }
 
+ */
 
 /**
  * Create JSON-ld for entire restaurant
- */
+
 fillRestaurantSchema = (restaurant = self.restaurant) => {
 	const container = document.getElementById('restaurant-container');
 	const schemaScript = document.createElement('script');
@@ -195,7 +303,7 @@ fillRestaurantSchema = (restaurant = self.restaurant) => {
 	}`;
 	container.appendChild(schemaScript);
 }
-
+ */
 
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
@@ -227,11 +335,52 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 	restaurantContainer.append(restaurantHoursTable);
 }
 
+fetchReviews = (restaurant = self.restaurant) => {
+	let restaurantReview;
+
+	fetch('http://localhost:1337/reviews/?restaurant_id=' +  restaurant.id)
+		.then(function(response) {
+			return response.json();
+		})
+		.then(function(reviews){
+			restaurantReview = reviews;
+
+			let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+			let open = indexedDB.open("Restaurants", 2);
+			open.onsuccess = function(event) {
+				var db = event.target.result;
+				reviews.forEach(function(review){
+					db.transaction("AllReviews", "readwrite").objectStore("AllReviews").add(review);
+				});
+			}
+
+			fillReviewsHTML(restaurantReview);
+		})
+		.catch(function(){
+			let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+			let open = indexedDB.open("Restaurants", 2);
+			open.onsuccess = function(event) {
+				var db = event.target.result;
+				var ar = db.transaction("AllReviews", "readwrite").objectStore("AllReviews");
+
+				let request = ar.getAll();
+
+				request.onsuccess = function(items) {
+					finalRequest = items.target.result;
+					fillReviewsHTML(finalRequest);
+				}
+			}
+		})
+
+}
+
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+fillReviewsHTML = (reviews) => {
 	const container = document.getElementById('reviews-container');
+
+	console.log('reviews: ' + reviews);
 
 	if (!reviews) {
 		const noReviews = document.createElement('p');
@@ -241,11 +390,64 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
 	}
 
 	const ul = document.getElementById('reviews-list');
-	reviews.forEach(review => {
-		ul.appendChild(createReviewHTML(review));
+	while (ul.firstChild) {
+		ul.removeChild(ul.firstChild);
+	}
+	reviews.forEach(reviews => {
+		ul.appendChild(createReviewHTML(reviews));
 	});
 
-	container.appendChild(ul);
+}
+
+postReview = (isOffline, data) => {
+	const reviewRating = document.getElementById("review-rating").value;
+	const reviewName = document.getElementById("review-name").value;
+	const reviewText = document.getElementById("review-message").value;
+	const reviewForm = document.getElementById("review-form");
+	const reviewID = reviewForm.getAttribute('data-res-id');
+	let postOpts;
+
+	if(isOffline) {
+		postOpts = data;
+	} else {
+		postOpts = {
+			"restaurant_id": Number(reviewID),
+			"name": reviewName,
+			"rating": Number(reviewRating),
+			"comments": reviewText
+		}
+	}
+
+	fetch('http://localhost:1337/reviews/', {
+			method: 'post',
+			body: JSON.stringify(postOpts)
+		}).then(function(response) {
+			return response.json();
+		}).then(function() {
+			fetchReviews();
+			reviewForm.innerHTML = "Your review has been submitted!";
+		}).catch(function() {
+			console.log('errir');
+
+			if(!isOffline) {
+				console.log('new Review');
+				let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+				let open = indexedDB.open("Restaurants", 2);
+				open.onsuccess = function(event) {
+					var db = event.target.result;
+					var tx = db.transaction("OfflineReviews", "readwrite");
+					var offlineReviews = tx.objectStore("OfflineReviews");
+					var reviewObjectStore;
+					offlineReviews.add(postOpts);
+					tx.transaction.oncomplete = function() {
+						reviewObjectStore = db.transaction("OfflineReviews", "readwrite").objectStore("OfflineReviews");
+						reviewObjectStore.add(postOpts);
+					}
+				}
+			}
+
+			reviewForm.innerHTML = "Oh no! It appears you are offline. Don't worry, we've saved this review. Next time you come to the site we'll post it for you!";
+		});;
 }
 
 
@@ -264,7 +466,8 @@ createReviewHTML = (review) => {
 	header.appendChild(name);
 
 	const date = document.createElement('time');
-	date.innerHTML = review.date;
+	var finalDate = new Date(review.createdAt);
+	date.innerHTML = finalDate.toLocaleDateString("en-US");
 	header.appendChild(date);
 
 	li.appendChild(header);

@@ -30,7 +30,7 @@ gulp.task('main-scripts', function() {
 // Global JS - Concatenate, babel, minify, and rename
 gulp.task('res-scripts', function() {
     return gulp.src(['js/register-worker.js', 'js/dbhelper.js', 'js/restaurant_info.js'])
-        .pipe(babel({ compact:true }))
+        .pipe(babel({ compact:true, minified:true, comments:false }))
         .pipe(concat('res.min.js'))
         .pipe(gulp.dest('js/min'))
 });

@@ -26,6 +26,7 @@
     "gulp-cssmin": "^0.2.0",
     "gulp-image-resize": "^0.13.0",
     "gulp-images-resizer": "0.0.5",
+    "gulp-uglify": "^3.0.1",
     "gulp-webp": "^3.0.0"
   }
 }

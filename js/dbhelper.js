@@ -23,7 +23,7 @@ class DBHelper {
 		// This works on all devices/browsers, and uses IndexedDBShim as a final fallback
 		let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
 
-		let open = indexedDB.open("Restaurants", 1);
+		let open = indexedDB.open("Restaurants", 2);
 
 		let restaurantList = [];
 
@@ -31,9 +31,12 @@ class DBHelper {
 		open.onupgradeneeded = function() {
 			let db = open.result;
 			let store = db.createObjectStore("RestaurantStore", {keyPath: "id"});
+			db.createObjectStore("OfflineReviews", {keyPath: "id", autoIncrement: true});
+			let allReviews = db.createObjectStore("AllReviews", {keyPath: "id"});
+			allReviews.createIndex("restaurant_id", "restaurant_id",{ unique: false });
+			let changedFav = db.createObjectStore("ChangedFavs", {keyPath: "id",  autoIncrement: true});
 			var customerObjectStore;
 			console.log('idb upgrade needed');
-
 
 			fetch(DBHelper.DATABASE_URL)
 				.then(function(response) {
@@ -46,20 +49,35 @@ class DBHelper {
 							customerObjectStore.add(customer);
 						});
 					};
-					callback(null, restaurants);
 				})
 				.catch(function(){
 					const error = (`Request failed.`);
 					callback(error, null);
 				})
+
 		};
 
 		open.onsuccess = function() {
 			// Start a new transaction
 			var db = open.result;
 			var tx = db.transaction("RestaurantStore", "readwrite");
+			var or = db.transaction("OfflineReviews", "readwrite");
 			var store = tx.objectStore("RestaurantStore");
+			var offlineReviews = or.objectStore("OfflineReviews");
 			console.log('idb success')
+
+			offlineReviews.openCursor().onsuccess = function(event) {
+				var cursor = event.target.result;
+				if(cursor) {
+					postReview(true, cursor.value)
+					cursor.continue();
+				} else {
+					callback(null, restaurantList);
+					console.log('list', restaurantList);
+					console.log('Entries all displayed.');
+					offlineReviews.clear();
+				}
+			};
 
 			store.openCursor().onsuccess = function(event) {
 				var cursor = event.target.result;
